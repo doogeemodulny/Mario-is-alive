@@ -1,73 +1,93 @@
-import pygame
-import sys, os
+from Functions import *
+from pygame_textinput import TextInput
+from DataBase import *
 
-
-def load_image(name, colorkey=None):
-    fullname = os.path.join('data', name)
-    if not fullname:
-        print(f"Файл с изображением '{name}' не найден")
-        sys.exit()
-    image = pygame.image.load(fullname)
-    if colorkey is not None:
-        image = image.convert()
-        if colorkey == -1:
-            colorkey = image.get_at((0, 0))
-        image.set_colorkey(colorkey)
-    else:
-        image = image.convert_alpha()
-    return image
-
-
-def write_string(string, y, x, screen, color='white'):
-    font = pygame.font.Font(None, 30)
-    string_rendered = font.render(string, 1, pygame.Color(color))
-    intro_rect = string_rendered.get_rect()
-    intro_rect.top = y
-    intro_rect.x = x
-    screen.blit(string_rendered, intro_rect)
-
-
-
-def terminate():
-    pygame.quit()
-    sys.exit()
+textinput = TextInput()
 
 
 class FinalCutscene():
-    def __init__(self, screen, clock, cn):
+    def __init__(self, screen, clock, level, nick, coins):
+        self.background = screen
+        self.screen = screen
+        self.coins = coins
+        self.nick = nick
         self.clock = clock
-        fon = pygame.transform.scale(load_image('win1.jpg'), (800, 640))
-        screen.blit(fon, (0, 0))
+        self.level = level
+        add(self.nick, self.level, self.coins)
 
     def start(self):  # лучше сделать тут всю логику, а в мэйне просто запустить
+        res = conclusion(self.nick, self.level)
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     terminate()
-                elif event.type == pygame.KEYDOWN or \
-                        event.type == pygame.MOUSEBUTTONDOWN:
+                elif event.type == pygame.KEYDOWN and (event.key == pygame.K_KP_ENTER or event.key == pygame.K_RETURN):
+                    self.results()
                     return  # начинаем игру
+            self.screen.blit(self.background, (0, 0))
+            write_string('Имя персонажа:  ' + str(res[0]), 300, 300, self.screen, 30, 'light blue')
+            write_string('Собрано монет:  ' + str(res[1]), 300, 350, self.screen, 30, 'light blue')
             pygame.display.flip()
             self.clock.tick(60)
 
+    def results(self):
+        a = top5(self.level)
+        if len(a) > 5:
+            a = a[:5]
+            print(a)
+        if len(a) < 5:
+            while len(a) != 5:
+                a.append((' ', ' '))
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    terminate()
+                elif event.type == pygame.KEYDOWN and (event.key == pygame.K_KP_ENTER or event.key == pygame.K_RETURN):
+                    return  # начинаем игру
+            self.screen.fill("#004400")
+            write_string('Таблица лидеров', 40, 20, self.screen, 100)
+            x, y = 200, 150
+            x1 = 410
+            for i in range(5):
+                pygame.draw.rect(self.screen, pygame.Color('white'), (x, y, 200, 40))
+                write_string(a[i][0], x, y, self.screen, 50, 'black')
+                pygame.draw.rect(self.screen, pygame.Color('white'), (x1, y, 100, 40))
+                write_string(str(a[i][1]), x1, y, self.screen, 50, 'black')
+                y += 50
+            pygame.display.flip()
+            self.clock.tick(60)
 
 
 class StartCutscene():
     def __init__(self, screen, clock):
         self.clock = clock
-        line1 = 'Добро пожаловать!'
-        line2 = 'Нажмите на любую кнопку, чтобы продолжить.'
+        self.screen = screen
 
-        write_string(line1, 100, 300, screen)
-        write_string(line2, 600, 200, screen, 'light blue')
-
-    def start(self):  # тоже самое
+    def start(self, star_screen):  # тоже самое
         while True:
-            for event in pygame.event.get():
+            self.screen.fill((0, 0, 0))
+            events = pygame.event.get()
+            for event in events:
                 if event.type == pygame.QUIT:
                     terminate()
-                elif event.type == pygame.KEYDOWN or \
-                        event.type == pygame.MOUSEBUTTONDOWN:
-                    return  # начинаем игру
+                elif event.type == pygame.KEYDOWN and (
+                        event.key == pygame.K_KP_ENTER or event.key == pygame.K_RETURN):
+                    self.screen.fill((0, 0, 0))
+                    nick = textinput.get_text()
+                    return nick  # начинаем игру
+
+            line1 = 'Добро пожаловать!'
+            line2 = 'Нажмите ENTER, чтобы продолжить.'
+            line3 = 'Введите имя:'
+
+            self.screen.blit(star_screen, (0, 0))
+
+            write_string(line1, 280, 100, self.screen, 30, 'light blue')
+            write_string(line2, 200, 600, self.screen, 30, 'light blue')
+            write_string(line3, 280, 300, self.screen, 30)
+
+            pygame.draw.rect(self.screen, pygame.Color('white'), (280, 350, 250, 40))
+            textinput.update(events)
+            self.screen.blit(textinput.get_surface(), (280, 355))
             pygame.display.flip()
             self.clock.tick(60)
