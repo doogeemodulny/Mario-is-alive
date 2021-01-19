@@ -117,7 +117,6 @@ class Player(sprite.Sprite):
                 if self.rect.bottom == p.rect.top and self.rect.left > p.rect.left - self.rect.width \
                         and self.rect.right < p.rect.right + self.rect.width:
                     self.isGrounded = True
-                    print("ass")
                     break
                 else:
                     self.isGrounded = False
@@ -125,6 +124,7 @@ class Player(sprite.Sprite):
 
     def collide_money(self, coins, finish):
         for c in coins:
+            c.boltCoinAnim.blit(c.image, (0, 0))
             if sprite.collide_rect(self, c): # пересечение с монеткой
                 self.onCoinTile = True
                 finish.increase_money_count() # увеличивем счетчик монеток

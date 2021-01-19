@@ -67,7 +67,7 @@ def main(level): # передаем уровень сюда, чтобы можн
     entities = pygame.sprite.Group()  # Все объекты
     platforms = []  # то, во что мы будем врезаться или опираться
     coins = [] # монетки
-    entities.add(hero)
+
     level_width = len(level[0]) * PLATFORM_WIDTH
     level_height = len(level) * PLATFORM_HEIGHT
 
@@ -126,9 +126,8 @@ def main(level): # передаем уровень сюда, чтобы можн
             cutscene.start()
 
         screen.blit(bg, (0, 0))  # Каждую итерацию необходимо всё перерисовывать
-
+        entities.add(hero)
         camera.update(hero) # камера центрируется относительно главного персонажа
-
         for e in entities: # отображение всего
             screen.blit(e.image, camera.apply(e)) # перерисовываются все блоки, создавая эффект движения камеры
 
