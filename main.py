@@ -40,7 +40,6 @@ def main(level, number, screen, timer):  # передаем уровень сю�
     platforms = []  # то, во что мы будем врезаться или опираться
 
     coins = []  # монетки
-    entities.add(hero)
 
     level_width = len(level[0]) * PLATFORM_WIDTH
     level_height = len(level) * PLATFORM_HEIGHT
