@@ -124,6 +124,7 @@ class Player(sprite.Sprite):
 
     def collide_money(self, coins, finish):
         for c in coins:
+            c.boltCoinAnim.blit(c.image, (0, 0))
             if sprite.collide_rect(self, c): # пересечение с монеткой
                 self.onCoinTile = True
                 finish.increase_money_count() # увеличивем счетчик монеток
