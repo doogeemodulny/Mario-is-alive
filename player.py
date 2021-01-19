@@ -1,5 +1,6 @@
 from pygame import *
 import pyganim
+import Functions
 
 MOVE_SPEED = 7
 WIDTH = 22
@@ -11,7 +12,6 @@ ANIMATION_DELAY = 100
 class Player(sprite.Sprite):
     def __init__(self, x, y):
         sprite.Sprite.__init__(self)
-
         self.xvel = 0  # скорость перемещения. 0 - стоять на месте
         self.yvel = 0  # скорость падения. 0 - висеть
         self.startX = x  # Начальная позиция Х, пригодится когда будем переигрывать уровень
@@ -117,7 +117,6 @@ class Player(sprite.Sprite):
                 if self.rect.bottom == p.rect.top and self.rect.left > p.rect.left - self.rect.width \
                         and self.rect.right < p.rect.right + self.rect.width:
                     self.isGrounded = True
-                    print("ass")
                     break
                 else:
                     self.isGrounded = False
@@ -137,4 +136,4 @@ class Player(sprite.Sprite):
         if sprite.collide_rect(self, finish):
             money = finish.get_money_count()
             print(money)
-            return True, money
+            return money
