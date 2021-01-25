@@ -136,5 +136,4 @@ class Player(sprite.Sprite):
     def collide_finish(self, finish):
         if sprite.collide_rect(self, finish):
             money = finish.get_money_count()
-            print(money)
             return money
