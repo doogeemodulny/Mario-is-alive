@@ -91,7 +91,6 @@ class Player(sprite.Sprite):
                                           # finish передаем чтобы увеличивать счетчик
 
         if self.collide_finish(finish): # запускаем проверку столкновения с финишным тайлом
-
             return self.collide_finish(finish)
         return False
 

@@ -97,6 +97,7 @@ def main(level, number, screen, timer):  # передаем уровень сю�
         isFinished = hero.update(left, right, up, platforms, coins, finish)  # передвижение
 
         if isFinished:  # когда из апдейта (строчка выше) передается, что финиш достигнут, попадаем сюда
+            hero.image = image.load("data/0.png")
             cutscene = FinalCutscene(screen, timer, number, nick, hero.collide_finish(finish))
             cutscene.start()
             return
