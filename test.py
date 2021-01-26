@@ -1,3 +1,2 @@
-import pygame
-
-print(pygame.font.match_font('calibri'))
+import random
+print(random.randint(1, 4))

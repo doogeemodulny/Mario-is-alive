@@ -4,6 +4,7 @@ from camera import Camera
 from cutscenes import FinalCutscene, StartCutscene
 from Functions import *
 from Levels import levels
+import MUSIC
 
 # Объявляем переменные
 WIN_WIDTH = 800  # Ширина создаваемого окна
@@ -89,6 +90,8 @@ def main(level, number, screen, timer):  # передаем уровень сю�
                 left = False
 
             if e.type == KEYDOWN and e.key == K_UP:
+                mus = MUSIC.Music()
+                mus.jump()
                 up = True
 
             if e.type == KEYUP and e.key == K_UP:
@@ -97,8 +100,7 @@ def main(level, number, screen, timer):  # передаем уровень сю�
         isFinished = hero.update(left, right, up, platforms, coins, finish)  # передвижение
 
         if isFinished:  # когда из апдейта (строчка выше) передается, что финиш достигнут, попадаем сюда
-            hero.image = image.load("data/0.png")
-            cutscene = FinalCutscene(screen, timer, number, nick, hero.collide_finish(finish))
+            cutscene = FinalCutscene(screen, timer, number, nick, isFinished)
             cutscene.start()
             return
 

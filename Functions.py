@@ -1,6 +1,7 @@
 import pygame
 import sys
 import os
+import MUSIC
 
 WIN_WIDTH = 800  # Ширина создаваемого окна
 WIN_HEIGHT = 640
@@ -47,7 +48,8 @@ def quick_sort(arr):
 
 def last_image(screen, clock):
     fon = pygame.transform.scale(load_image('end1.jpg'), (800, 640))
-
+    mus = MUSIC.Music()
+    mus.end()
     while True:
         events = pygame.event.get()
         for event in events:
