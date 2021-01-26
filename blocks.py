@@ -39,13 +39,14 @@ class Coin(sprite.Sprite):
 class Finish(sprite.Sprite):
     def __init__(self, x, y):
         sprite.Sprite.__init__(self)
-        self.image = Surface((PLATFORM_WIDTH, PLATFORM_HEIGHT * 1.5))
+        self.image = Surface((10, 1))
         self.image = image.load("data/finish_flag.png")
-        self.rect = Rect(x, y, PLATFORM_WIDTH, PLATFORM_HEIGHT)
+        self.image.fill(FINISH_COLOR)
+        self.rect = Rect(x, y + 30, 10, 1)
         self.money_count = 0
 
     def get_money_count(self):
-        return self.money_count
+        return str(self.money_count)
 
     def increase_money_count(self):
         self.money_count += 1

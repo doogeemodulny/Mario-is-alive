@@ -12,7 +12,7 @@ def add(nick, level, coins):
         level1 = res[1]
         coins1 = res[2]
         if nick == nick1 and level == level1:  # Если этот ник уже есть в бд
-            if coins > coins1:  # А монет собрано больше
+            if int(coins) > coins1:  # А монет собрано больше
                 cur.execute(f"""UPDATE RESULTS  
                                     SET coins = {coins}
                                     WHERE nickname = '{nick}' AND level = {level}""")  # Обновляем результат
