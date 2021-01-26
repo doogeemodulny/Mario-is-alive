@@ -7,11 +7,6 @@ pygame.font.init()
 
 
 class TextInput:
-    """
-    This class lets the user input a piece of text, e.g. a name or a message.
-    This class let's the user input a short, one-lines piece of text at a blinking cursor
-    that can be moved using the arrow-keys. Delete, home and end work as well.
-    """
     def __init__(
             self,
             initial_string="",
@@ -24,17 +19,6 @@ class TextInput:
             repeat_keys_interval_ms=35,
             max_string_length=-1,
             password=False):
-        """
-        :param initial_string: Initial text to be displayed
-        :param font_family: name or list of names for font (see pygame.font.match_font for precise format)
-        :param font_size:  Size of font in pixels
-        :param antialias: Determines if antialias is applied to font (uses more processing power)
-        :param text_color: Color of text (duh)
-        :param cursor_color: Color of cursor
-        :param repeat_keys_initial_ms: Time in ms before keys are repeated when held
-        :param repeat_keys_interval_ms: Interval between key press repetition when held
-        :param max_string_length: Allowed length of text
-        """
 
         # Text related vars:
         self.antialias = antialias
@@ -164,16 +148,3 @@ class TextInput:
 
     def get_text(self):
         return self.input_string
-
-    def get_cursor_position(self):
-        return self.cursor_position
-
-    def set_text_color(self, color):
-        self.text_color = color
-
-    def set_cursor_color(self, color):
-        self.cursor_surface.fill(color)
-
-    def clear_text(self):
-        self.input_string = ""
-        self.cursor_position = 0

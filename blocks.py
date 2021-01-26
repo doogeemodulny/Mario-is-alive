@@ -4,6 +4,7 @@ import pyganim
 PLATFORM_COLOR = "#A05550"
 COIN_COLOR = "#FFD700"
 FINISH_COLOR = "#FAF999"
+BACKGROUND_COLOR = "#004400"
 PLATFORM_WIDTH = PLATFORM_HEIGHT = 32
 COIN_ANIMATION_DELAY = 180
 
@@ -39,10 +40,9 @@ class Coin(sprite.Sprite):
 class Finish(sprite.Sprite):
     def __init__(self, x, y):
         sprite.Sprite.__init__(self)
-        self.image = Surface((10, 1))
-        self.image = image.load("data/finish_flag.png")
-        self.image.fill(FINISH_COLOR)
-        self.rect = Rect(x, y + 30, 10, 1)
+        self.image = Surface((10, 5))
+        self.image.fill(BACKGROUND_COLOR)
+        self.rect = Rect(x, y + PLATFORM_HEIGHT - 2, 10, 1)
         self.money_count = 0
 
     def get_money_count(self):
@@ -50,3 +50,12 @@ class Finish(sprite.Sprite):
 
     def increase_money_count(self):
         self.money_count += 1
+
+
+class Finish_flag(sprite.Sprite):
+    def __init__(self, x, y):
+        sprite.Sprite.__init__(self)
+        self.image = Surface((10, 5))
+        self.image = image.load("data/finish_flag.png")
+        self.rect = Rect(x, y, PLATFORM_WIDTH, PLATFORM_HEIGHT)
+        self.money_count = 0
