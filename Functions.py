@@ -27,7 +27,7 @@ def load_image(name, colorkey=None):
 
 def write_string(string, x, y, screen, size, color='white'):
     font = pygame.font.Font(pygame.font.match_font('calibri'), size)
-    string_rendered = font.render(string, 1, pygame.Color(color))
+    string_rendered = font.render(string, True, pygame.Color(color))
     intro_rect = string_rendered.get_rect()
     intro_rect.top = y
     intro_rect.x = x

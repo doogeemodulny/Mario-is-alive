@@ -1,6 +1,7 @@
 import pygame
 import random
 
+
 class Music():
     def __init__(self):
         pass

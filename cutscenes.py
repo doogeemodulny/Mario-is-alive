@@ -53,7 +53,7 @@ class FinalCutscene():  # всё, что происходит после око�
             x1 = 410
             for i in range(5):  # Отрисовка
                 pygame.draw.rect(self.screen, pygame.Color('white'), (x, y, 200, 40))
-                write_string(a[i][0], x, y, self.screen, 50, 'black')
+                write_string(str(a[i][0]), x, y, self.screen, 50, 'black')
                 pygame.draw.rect(self.screen, pygame.Color('white'), (x1, y, 100, 40))
                 write_string(str(a[i][1]), x1, y, self.screen, 50, 'black')
                 y += 50
